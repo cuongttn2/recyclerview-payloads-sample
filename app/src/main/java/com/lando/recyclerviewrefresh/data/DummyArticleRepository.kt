@@ -58,6 +58,19 @@ class DummyArticleRepository @Inject constructor() {
         articlesMutableFlow.emit(updatedArticles)
     }
 
+    suspend fun addArticles() {
+        val updatedArticles = mutableListOf<Article>()
+        updatedArticles.addAll(articlesFlow.value)
+        updatedArticles.add(
+            0,
+            updatedArticles[0].copy(
+                id = "${updatedArticles.size + 1}",
+                subtitle = "test ${updatedArticles.size + 1}"
+            )
+        )
+        articlesMutableFlow.emit(updatedArticles)
+    }
+
     suspend fun reorderArticles() {
         val updatedArticles = articlesFlow.value.shuffled()
         articlesMutableFlow.emit(updatedArticles)

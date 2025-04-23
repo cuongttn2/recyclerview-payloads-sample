@@ -24,6 +24,13 @@ class MainViewModel @Inject constructor(private val repository: DummyArticleRepo
             is Action.ArticleBookmarkClicked -> bookmarkArticle(action.articleId)
             Action.RefreshClicked -> refreshArticles()
             Action.ReorderClicked -> reorderArticles()
+            Action.AddClicked -> addArticles()
+        }
+    }
+
+    private fun addArticles() {
+        viewModelScope.launch {
+            repository.addArticles()
         }
     }
 
@@ -62,6 +69,8 @@ class MainViewModel @Inject constructor(private val repository: DummyArticleRepo
         object RefreshClicked : Action
 
         object ReorderClicked : Action
+
+        object AddClicked : Action
 
         data class ArticleBookmarkClicked(val articleId: String) : Action
     }

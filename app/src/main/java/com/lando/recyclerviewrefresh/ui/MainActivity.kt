@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lando.recyclerviewrefresh.R
 import com.lando.recyclerviewrefresh.databinding.ActivityMainBinding
 import com.lando.recyclerviewrefresh.ui.adapter.ArticlesRecyclerViewAdapterWithPayload
+import com.lando.recyclerviewrefresh.ui.adapter.ArticlesRecyclerViewAdapterWithoutPayload
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,6 +49,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.action_add -> {
+                viewModel.onUserAction(MainViewModel.Action.AddClicked)
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -66,6 +72,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
                 // remain scrolled to top for demo purposes
+                binding.rvArticles.scrollToPosition(0)
+            }
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 binding.rvArticles.scrollToPosition(0)
             }
         })
